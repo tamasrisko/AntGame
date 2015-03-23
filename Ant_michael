@@ -1,0 +1,62 @@
+import java.util.ArrayList;
+
+public class Ant {
+    private Position position ;
+    private Colour c;
+    private int restCount;
+    private boolean dead;
+    private int state;
+    private int resting;
+    private type instruction;
+    
+    public Ant(int x, int y, int dir){
+        position = new Position(x,y);
+        
+    }
+    
+    protected int turn(boolean lr, int dir){
+        if (lr == true) dir -=1;
+        if (lr != true) dir +=1;
+        return dir;
+    }
+    
+    /* using a ArrayList to store the information of the cells*/
+    protected ArrayList senseCell(Position position, int dir, int senseDir){
+        ArrayList list = new ArrayList();
+        return list;
+    }
+    
+    private void adjCell(Position position, int direction){
+    int ox;
+    int oy;
+    switch (direction){
+    case 0: ox = position.x+1;
+            oy = position.y;
+            break;
+    case 1: if ((position.y%2) == 0) {ox = position.x;
+                             oy = position.y+1;}
+            else {ox = position.x+1;
+                  oy = position.y+1;}
+            break;
+    case 2: if ((position.y%2) == 0) {ox = position.x-1;
+                             oy = position.y+1;}
+            else {ox = position.x;
+                  oy = position.y+1;}
+            break;
+    case 3: ox = position.x+1;
+            oy = position.y;
+            break;
+    case 4: if ((position.y%2) == 0) {ox = position.x-1;
+                             oy = position.y-1;}
+            else {ox = position.x;
+                  oy = position.y-1;}
+            break;
+    case 5: if ((position.y%2) == 0) {ox = position.x;
+                             oy = position.y-1;}
+            else {ox = position.x-1;
+                  oy = position.y-1;}
+            break;
+  }
+  
+    }
+}
