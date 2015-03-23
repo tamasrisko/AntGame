@@ -13,10 +13,7 @@ package antgame;
 import java.util.Random;
 
 public class AntBrain
-{
-    // Testing somthing here
-    int bob;
-    
+{    
     /**
      * Outline of Finite state machine language
      * 
@@ -45,32 +42,7 @@ public class AntBrain
      * Once moved, try to pick up food, if failed stay at current state, if
      * found food, go to state 8.
      */
-    
-    Ant ant;
-    int currentState;
-    int direction;
-    int resting; // rest
-    Random random;
-    LeftOrRight lr;
-    Colour colour;
-    SenseDir sd;
-    //Ant a;
-    
-    public enum Colour
-    {
-        RED, BLACK
-    }
-    
-    public enum LeftOrRight
-    {
-        LEFT, RIGHT
-    }
-    
-    public enum SenseDir
-    {
-        HERE, AHEAD, LEFTAHEAD, RIGHTAHEAD
-    }
-    
+        
     public AntBrain()
     {
         
@@ -78,9 +50,9 @@ public class AntBrain
     }
     
     /**
-     * 
-     * @param c colour of ant
-     * @param state current state
+     * Retrieve the instruction for the ant to follow
+     * @param c colour of ant attached to this brain
+     * @param state current state of ant
      */
     public void getInstructions(Colour c, int state)    // return an instruction
     {
@@ -112,8 +84,7 @@ public class AntBrain
                 break;
             case 4: //-Turn Left 0
                     // Turn left and go to state 0
-                ant.turn(lr.LEFT, state);//left, state: 0
-                ant.setState(0);
+                //left, state: 0
                 break;
             case 5: //-Flip 2 6 7
                     // p = 2. St1 = 6, St2 = 7
@@ -173,88 +144,5 @@ public class AntBrain
                 // if moved was sucsessfyl, state: 8
                 // else failure, state 11
         }
-    }
-    
-    public void turn(LeftOrRight _lr, int d)
-    {
-        switch (_lr)
-        {
-            case LEFT:
-                d = (d + 5) % 6; // Mod 6
-                //setDirection(d);
-                break;
-            case RIGHT:
-                d = (d + 1) % 6; // Mod 6
-                //setDirection(d);
-                break;  
-        }
-    }
-    
-    /**
-     * Pick up food and jump to state st1, st2 if failed
-     * @param st1
-     * @param st2
-     */
-    public void pickUp(int st1, int st2)
-    {
-        // if food at(currentP)
-        // currentState = st1
-        // else
-        // currentState = st2
-    }
-    
-    /**
-     * 
-     * @param n max range 
-     * @return random number which has been generated from n
-     */
-    public int randomInt(int n)
-    {
-        int h;
-        this.random = new Random(n);
-        
-        h = random.nextInt(n) + 1;
-        return h;
-    }
-    
-    /**
-     * 
-     * x is a random number between 0-p
-     * @param p maximum number to be randomly generated
-     * @param st1 state to be set if x = 0
-     * @param st2 state to be set otherwise
-     */
-    public void flip(int p, int st1, int st2)
-    {
-        int x = randomInt(p);
-        
-        if (x == 0)
-        {
-            this.currentState = st1;
-        }
-        else
-        {
-            this.currentState = st2;
-        }
-    }
-    
-    public void move(Ant a)
-    {
-        
-    }
-    
-    public void setState(int st)
-    {
-        this.currentState = st;
-    }
-    
-    public void setDirection(Ant s, int d)
-    {
-        this.direction = d;
-    }
-    
-    public void setColour(Colour c)
-    {
-        this.colour = c;
-    }
+    }    
 }
