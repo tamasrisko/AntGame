@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 public class Ant{
 	// variables
 	private Position p;	// position
@@ -35,7 +38,7 @@ public class Ant{
 	 * @param  dead			true if this ant is dead, false if otherwise
 	 * @param  s 			state
 	 */
-	public Ant(Position p, int dir, Colour c, int restCount, int dead, int s){
+	public Ant(Position p, int dir, Colour c, int restCount, boolean dead, int s){
 		this.p = p;
 		this.dir = dir;
 		this.c = c;
@@ -78,16 +81,17 @@ public class Ant{
 	 * @return the Arraylist of positions (x,y) of the cell if that has a sense, 
 	 * or (-1,-1) if no cell has a sense.
 	 */
-	public Arraylist senseCell(SenseDirection sd){
-                list<Position> list  = new ArrayList<Position>();
+	public ArrayList senseCell(SenseDirection sd){
+                ArrayList<Position> list  = new ArrayList<>();
                 list.add(p);
-                for(int i=sd-1;i<sd+3;i++){
-                    list.add(adjcentCell(i));
+                for(int i=(dir-1);i<(dir+3);i++){
+                    list.add(adjacentCell(i));
                 }
                 return list;
 	}
         
-         public int state(){
+        
+        public int state(){
             return s;
         }
         
@@ -105,7 +109,27 @@ public class Ant{
 
 	public boolean hasFood(Ant a){
 		return hasFood;
-	}
+            }
+        
+        public void setState(int state)
+        {
+           s = state;
+        }
+    
+        public void setResting(int r)
+        {
+            restCount+=r;
+        }
+    
+        public void setDirection(int d)
+        {
+            dir = d;
+        }
+    
+        public void setHasFood(boolean f)
+        {
+            hasFood = f;
+        }
 
 	/**
 	 * Returns number of ants with colour c which are adjacent 
@@ -138,7 +162,7 @@ public class Ant{
 	 * @see checkForSurroundedAntAt
 	 */
 	public boolean checkForSurroundedAnts(Ant a){
-            int surrondingAnt =0 ;
+            int surroundingAnt =0 ;
             for (int i=0;i<6;i++){
                 if (getCell(a.adjacentCell(i)).hasAnt()){
                     surroundingAnt++;
