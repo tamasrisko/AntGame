@@ -51,98 +51,110 @@ public class AntBrain
     
     /**
      * Retrieve the instruction for the ant to follow
-     * @param c colour of ant attached to this brain
+     * @param a To call methods which actions the ant will do -  I think this is better than the ant colour
      * @param state current state of ant
      */
-    public void getInstructions(Colour c, int state)    // return an instruction
+    public void getInstructions(Ant a, int state)    // return an instruction
     {
         
         switch (state)
         {
-            case 0: //-SeAd 1 3 Food
+            case 0: //-SeAd 4 1 Food
                     // Sense Ahead for -food- [Search] is there food in front of me
                 // Check the cell infront,
-                // if there is food - move to cell, state: 1
-                // else state: 3
+                // if there is food - move to cell, state: 4
+                // else state: 1
                 break;
-            case 1: //-Move 2 0
-                    // Move forward and go to state 2, 0 if failed
-                // if moved was sucsessful, state: 2
+            case 1: //-SeAd 
+                // if there is enemy - sense ally ants, state: 2
+                // else state: 6
+                break;
+            case 2:
+                // if there is ally ants - fight?, state: 3
+                // else state: 6
+                break;
+            case 3: // 
+                // if more ally ants - kill ant, state: 0 - checks for food
+                // else if more enemy ants - die turn to food: more no state? 
+                break;
+            case 4: //-Move 5 0
+                    // Move forward and go to state 5 0 if failed
+                // if moved was sucsessful, state: 5
                 // else failure, state: 0
                 
-                // NEeeds to get the ants direction and move it foward
+                // Needs to get the ants direction and move it foward
                 break;
-            case 2: //-PickUp 8 0
-                    // Pick up food and jump to state 8, 0 if failed
+            case 5: //-PickUp 11 0
+                    // Pick up food and jump to state 9, 0 if failed
                 break;
-            case 3: //-Flip 3 4 5
-                    // p = 3. St1 = 4, St2 = 5
+            case 6: //-Flip 3 7 8
+                    // p = 3. St1 = 7, St2 = 8
                     // x is a random number between 0-p
                 // Random number between 0-3
-                // if x = 0, state: 4
-                // else state: 5
+                // if x = 0, state: 7
+                // else state: 8
                 break;
-            case 4: //-Turn Left 0
+            case 7: //-Turn Left 0
                     // Turn left and go to state 0
                 //left, state: 0
                 break;
-            case 5: //-Flip 2 6 7
-                    // p = 2. St1 = 6, St2 = 7
+            case 8: //-Flip 2 9 10
+                    // p = 2. St1 = 9, St2 = 10
                     // x is a random number between 0-p
                 // Random number between 0-2
-                // if x = 0, state: 6
-                // else state: 7
+                // if x = 0, state: 9
+                // else state: 10
                 break;
-            case 6: //- Turn Right 0
+            case 9: //- Turn Right 0
                     // Turn right and go to state 0
                 //right, state: 0
                 break;
-            case 7: //-Move 0 3
+            case 10: //-Move 0 6
                     // Move forward and go to state 0, 3 if failed
                 // if moved was sucsessful, state: 0
-                // else failure, state: 3
+                // else failure, state: 6
                 break;
-            case 8: //-SeAd 9 11 Home
+            case 11: //-SeAd 12 14 Home
                     // Sense Ahead for -Home- [Search] is there antHill in front of me
                 // Check the cell infront,
-                // if there is home - move to cell, state: 9
-                // else state: 11
+                // if there is home - move to cell, state: 12
+                // else state: 14
                 break;
-            case 9: //-Move 10 8
-                    // Move forward and go to state 10, 8 if faild
-                // if moved was sucsessfyl, state: 10
-                // else failure, state 8
+            case 12: //-Move 13 11
+                    // Move forward and go to state 13, 11 if faild
+                // if moved was sucsessfyl, state: 13
+                // else failure, state 11
                 break;
-            case 10: //-Drop 0
+            case 13: //-Drop 0
                      // Drop food and return to searching
                 // Drop, State: 0
                 break;
-            case 11: //- Flip 3 12 13
-                    // p = 3. St1 = 12, St2 = 13
+            case 14: //- Flip 3 15 16
+                    // p = 3. St1 = 15, St2 = 16
                     // x is a random number between 0-p
                 // Random number between 0-3
-                // if x = 0, state: 12
-                // else state: 13
+                // if x = 0, state: 15
+                // else state: 16
                 break;
-            case 12: //-Turn Left 8
-                    // Turn left and go to state 8
-                //left, state: 8
+            case 15: //-Turn Left 10
+                    // Turn left and go to state 9
+                //left, state: 11
                 break;
-            case 13: //-Flip 2 14 15
-                    // p = 2. St1 = 14, St2 = 15
+            case 16: //-Flip 2 17 18
+                    // p = 2. St1 = 12, St2 = 18
                     // x is a random number between 0-p
                 // Random number between 0-2
-                // if x = 0, state: 14
-                // else state: 15
+                // if x = 0, state: 17
+                // else state: 18
                 break;
-            case 14: //-Turn Right 8
-                    // Turn right and go to state 8
-                //right, state: 8
+            case 17: //-Turn Right 11
+                    // Turn right and go to state 11
+                //right, state: 11
                 break;
-            case 15: //-Move 8 11
-                // Move forward and go to state 8, 11 if faild
-                // if moved was sucsessfyl, state: 8
-                // else failure, state 11
+            case 18: //-Move 11 14
+                // Move forward and go to state 11, 14 if faild
+                // if moved was sucsessfyl, state: 11
+                // else failure, state 14
         }
     }    
 }
