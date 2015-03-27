@@ -68,18 +68,22 @@ public class AntBrain
                 // if there is food - move to cell, state: 4
                 // else state: 1
                 break;
-            case 1: //-SeAd 
+            case 1: //-SeAd 2 6 Enemy
+                    // Sense Ahead for -enemy- [Search] is there an ememy in front of me
+                // Check the cell infront,
                 // if there is enemy - sense ally ants, state: 2
                 // else state: 6
                 break;
-            case 2:
+            case 2: //-CheckSurrAnts -SeAd 3 6 Ally
+                    // Sense Around current ant for -allies- [Search] is there are allies around me
                 // if there is ally ants - fight?, state: 3
-                // else state: 6
+                // else state: 6 ---
                 break;
-            case 3: // 
+            case 3: //-More ally or enemy ants? 0
+                    // If more enemy ants around surrounding me - die, else move
                 // 5> enemy ants?
-                // if more ally ants - kill ant, state: 0 - checks for food
-                // else if more enemy ants - die turn to food: more no state? 
+                // if more enemy ants - die - turn to food 
+                // else enemy ant dies, state: 0 - checks for food
                 break;
             case 4: //-Move 5 0
                     // Move forward and go to state 5 0 if failed
