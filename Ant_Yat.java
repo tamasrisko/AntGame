@@ -73,12 +73,39 @@ public class Ant{
 	 * @param  p	position
 	 * @param  d 	direction
 	 * @param  sd 	sense direction
-	 * @return a list of positions [(x1,y1), (x2,y2), ...] of the cell that has
-	 * a sense, or (-1,-1) if no cell has a sense.
+	 * @return the position of the cell that has a sense, or 
+	 * (-1,-1) if no cell has a sense.
 	 */
-	public java.util.ArrayList<Position> senseCell(Position p, int d, SenseDirection sd){ 
-		//
-		return new new java.util.ArrayList<Position>();
+	public Position senseCell(Position p, int d, SenseDirection sd){ 
+		Position sensePosition;
+		HexagonLinker hl;
+		switch(sd){
+		case SenseDirection.HERE:
+			sensePosition = p;
+			break;
+			
+		case SenseDirection.AHEAD:
+			hl = new HexagonLinker(p.x, p.y, d);
+			sensePosition = new Position(hl.x, hl.y);
+			break;
+		
+		case SenseDirection.LEFTAHEAD:
+			hl = new HexagonLinker(p.x, p.y, turn(LeftOrRight.LEFT, d));
+			sensePosition = new Position(hl.x, hl.y);
+			break;
+			
+		case SenseDirection.RIGHTAHEAD:
+			hl = new HexagonLinker(p.x, p.y, turn(LeftOrRight.RIGHT, d));
+			sensePosition = new Position(hl.x, hl.y);
+			break;
+		default:
+			return new Position(-1, -1);
+		}
+		
+		if(true)	// cell at the sense position has something
+			return sensePosition;
+		else
+			return new Position(-1,-1);
 	}
 
 	/**
@@ -114,25 +141,15 @@ public class Ant{
 		}
 		return numAnts;
 	}
-
+	
 	/**
 	 * Checks if an ant at a position is surrounded.
 	 *
 	 * @param  p	position
 	 * @return true if it is surrounded, false if otherwise.
-	 */
-	public boolean checkForSurroundedAntAt(Position p){
-		return (adjAnts(p, otherColour(this.c)) >= 5);
-	}
-	
-	/**
-	 * Checks if an ant at a position is surrounded. [depilcated?]
-	 *
-	 * @param  p	position
-	 * @return true if it is surrounded, false if otherwise.
 	 * @see checkForSurroundedAntAt
 	 */
-	public boolean checkForSurroundedAnts(Position p){
+	public static boolean checkForSurroundedAnts(Position p){
 		return (adjAnts(p, otherColour(this.c)) >= 5);
 	}
 
