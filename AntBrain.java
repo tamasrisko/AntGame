@@ -43,10 +43,13 @@ public class AntBrain
      * found food, go to state 8.
      */
         
-    public AntBrain()
+    
+    // ***Varaibles***
+    private Ant a;
+    
+    public AntBrain(Ant _a)
     {
-        
-        
+        this.a = _a;
     }
     
     /**
@@ -74,6 +77,7 @@ public class AntBrain
                 // else state: 6
                 break;
             case 3: // 
+                // 5> enemy ants?
                 // if more ally ants - kill ant, state: 0 - checks for food
                 // else if more enemy ants - die turn to food: more no state? 
                 break;
@@ -156,5 +160,58 @@ public class AntBrain
                 // if moved was sucsessfyl, state: 11
                 // else failure, state 14
         }
-    }    
+    }
+    
+    public int State(Ant a)
+    {
+        return a.state();
+    }
+    
+    public Colour Colour(Ant a)
+    {
+        return a.colour();
+    }
+    
+    public int resting(Ant a)
+    {
+        return a.resting();
+    }
+    
+    public int direction(Ant a)
+    {
+        return a.direction();
+    }
+    
+    public boolean hasFood(Ant a)
+    {
+        return a.hasFood();
+    }
+    
+    public void setState(int s)
+    {
+        a.setState(s);
+    }
+    
+    public void setResting(int r)
+    {
+        a.setResting(r);
+    }
+    
+    public void setDirection(int d)
+    {
+        if (d < 0 || d > 5)
+        {
+            a.setDirection(0);
+            System.out.println("State was set to 0 as it was not between 0-5");
+        }
+        else
+        {
+            a.setDirection(d);
+        }
+    }
+    
+    public void setHasFood(boolean f)
+    {
+        a.setHasFood(f);
+    }
 }
