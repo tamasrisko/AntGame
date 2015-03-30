@@ -54,6 +54,66 @@ public class MapConstructor {
   }
   
   public Position[] hexagon(Position centre){
-    
+    int x = centre.x, y = centre.y;
+    Position[] posList = new Position[127];
+    if (y%2 == 0){
+      int index = 0;
+      for(int i = 0; i < 7; i++, index++)
+        posList[index] = new Position(x-3+i, y-6);
+      for(int i = 0; i < 8; i++, index++)
+        posList[index] = new Position(x-3+i, y-5);
+      for(int i = 0; i < 9; i++, index++)
+        posList[index] = new Position(x-4+i, y-4);
+      for(int i = 0; i < 10; i++, index++)
+        posList[index] = new Position(x-4+i, y-3);
+      for(int i = 0; i < 11; i++, index++)
+        posList[index] = new Position(x-5+i, y-2);
+      for(int i = 0; i < 12; i++, index++)
+        posList[index] = new Position(x-5+i, y-1);
+      for(int i = 0; i < 13; i++, index++)
+        posList[index] = new Position(x-6+i, y);
+      for(int i = 0; i < 12; i++, index++)
+        posList[index] = new Position(x-5+i, y+1);
+      for(int i = 0; i < 11; i++, index++)
+        posList[index] = new Position(x-5+i, y+2);
+      for(int i = 0; i < 10; i++, index++)
+        posList[index] = new Position(x-4+i, y+3);
+      for(int i = 0; i < 9; i++, index++)
+        posList[index] = new Position(x-4+i, y+4);
+      for(int i = 0; i < 8; i++, index++)
+        posList[index] = new Position(x-3+i, y+5);
+      for(int i = 0; i < 7; i++, index++)
+        posList[index] = new Position(x-3+i, y+6);
+    }
+    else{
+      int index = 0;
+      for(int i = 0; i < 7; i++, index++)
+        posList[index] = new Position(x-3+i, y-6);
+      for(int i = 0; i < 8; i++, index++)
+        posList[index] = new Position(x-4+i, y-5);
+      for(int i = 0; i < 9; i++, index++)
+        posList[index] = new Position(x-4+i, y-4);
+      for(int i = 0; i < 10; i++, index++)
+        posList[index] = new Position(x-5+i, y-3);
+      for(int i = 0; i < 11; i++, index++)
+        posList[index] = new Position(x-5+i, y-2);
+      for(int i = 0; i < 12; i++, index++)
+        posList[index] = new Position(x-6+i, y-1);
+      for(int i = 0; i < 13; i++, index++)
+        posList[index] = new Position(x-6+i, y);
+      for(int i = 0; i < 12; i++, index++)
+        posList[index] = new Position(x-6+i, y+1);
+      for(int i = 0; i < 11; i++, index++)
+        posList[index] = new Position(x-5+i, y+2);
+      for(int i = 0; i < 10; i++, index++)
+        posList[index] = new Position(x-5+i, y+3);
+      for(int i = 0; i < 9; i++, index++)
+        posList[index] = new Position(x-4+i, y+4);
+      for(int i = 0; i < 8; i++, index++)
+        posList[index] = new Position(x-4+i, y+5);
+      for(int i = 0; i < 7; i++, index++)
+        posList[index] = new Position(x-3+i, y+6);
+    }
+    return posList;
   }
 }
