@@ -11,6 +11,7 @@ public class MapConstructor {
     return cell;
   }
   
+  // shape: 0 for leaning left, 1 for leaning right
   public Position[] square(Position topLeft, int shape){
     int x = topLeft.x, y = topLeft.y;
     int option = y%2 + shape*2;
