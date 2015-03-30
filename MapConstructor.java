@@ -1,3 +1,5 @@
+// i guess it should be integrated with the world class.  
+
 public class MapConstructor {
   private Cell[][] cell;
   public Cell[][] gen(int rows, int cols) {
