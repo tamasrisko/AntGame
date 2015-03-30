@@ -190,7 +190,7 @@ public class Ant{
 	 * @return the direction of the ant currently facing.
 	 */
 	public static int direction(Ant a){
-		return 0;
+		return a.dir;
 	}
 
 	/**
