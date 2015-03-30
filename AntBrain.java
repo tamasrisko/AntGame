@@ -10,7 +10,10 @@ package antgame;
  *
  * @author Hannah
  */
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Random;
+
 
 public class AntBrain
 {    
@@ -46,10 +49,16 @@ public class AntBrain
     
     // ***Varaibles***
     private Ant a;
+    private SenseDirection sd;
+    
+    ArrayList<Method> Instructions;
+    ArrayList<Integer> Classes;
     
     public AntBrain(Ant _a)
     {
         this.a = _a;
+        Instructions = new ArrayList<Method>();
+        Classes = new ArrayList<Integer>();
     }
     
     /**
@@ -57,16 +66,30 @@ public class AntBrain
      * @param a To call methods which actions the ant will do -  I think this is better than the ant colour
      * @param state current state of ant
      */
-    public void getInstructions(Ant a, int state)    // return an instruction
+    public ArrayList<Method> getInstructions(Ant a, int state) throws NoSuchMethodException    // return an instruction
     {
-        
+        //a.getClass().getMethod(null, parameterTypes)
         switch (state)
         {
             case 0: //-SeAd 4 1 Food
                     // Sense Ahead for -food- [Search] is there food in front of me
-                // Check the cell infront,
-                // if there is food - move to cell, state: 4
-                // else state: 1
+                //a.senseCell(sd.AHEAD);// Check the cell infront,
+                if (a.senseCell(sd.AHEAD) == "food being true") // if there is food - move to cell, state: 4
+                {
+                    a.setState(4);
+                    //Classes.add(4);
+                    Instructions.add(a.getClass().getMethod("getDirection", null));
+                    
+                }
+                else // else state: 1
+                {
+                    a.setState(1);
+                }
+                
+                // or this will how it will be programmed
+                return Instructions;
+                //return Sense;
+                
                 break;
             case 1: //-SeAd 2 6 Enemy
                     // Sense Ahead for -enemy- [Search] is there an ememy in front of me
@@ -103,8 +126,8 @@ public class AntBrain
                 // else state: 8
                 break;
             case 7: //-Turn Left 0
-                    // Turn left and go to state 0
-                //left, state: 0
+                a.turn(lr.LEFT); // Turn left and go to state 0
+                a.setState(0);//left, state: 0
                 break;
             case 8: //-Flip 2 9 10
                     // p = 2. St1 = 9, St2 = 10
@@ -114,8 +137,8 @@ public class AntBrain
                 // else state: 10
                 break;
             case 9: //- Turn Right 0
-                    // Turn right and go to state 0
-                //right, state: 0
+                a.turn(lr.RIGHT); // Turn right and go to state 0
+                a.setState(0);//right, state: 0
                 break;
             case 10: //-Move 0 6
                     // Move forward and go to state 0, 3 if failed
@@ -145,8 +168,8 @@ public class AntBrain
                 // else state: 16
                 break;
             case 15: //-Turn Left 10
-                    // Turn left and go to state 9
-                //left, state: 11
+                a.turn(lr.LEFT); // Turn left and go to state 9
+                a.setState(11); //left, state: 11
                 break;
             case 16: //-Flip 2 17 18
                     // p = 2. St1 = 12, St2 = 18
@@ -156,8 +179,8 @@ public class AntBrain
                 // else state: 18
                 break;
             case 17: //-Turn Right 11
-                    // Turn right and go to state 11
-                //right, state: 11
+                a.turn(lr.RIGHT); // Turn right and go to state 11
+                a.setState(11); //right, state: 11
                 break;
             case 18: //-Move 11 14
                 // Move forward and go to state 11, 14 if faild
@@ -166,47 +189,92 @@ public class AntBrain
         }
     }
     
+    /**
+     * 
+     * @param a to check their current state to return
+     * @return the current state of the ant
+     */
     public int State(Ant a)
     {
         return a.state();
     }
     
+    /**
+     * 
+     * @param a to check their colour to return
+     * @return the ant a colour
+     */
     public Colour Colour(Ant a)
     {
         return a.colour();
     }
     
+    /**
+     * 
+     * @param a to be check their current resting time to return
+     * @return the current resting time of ant
+     */
     public int resting(Ant a)
     {
         return a.resting();
     }
     
+    /**
+     * 
+     * @param a to have their direction
+     * @return the direction the ant a is currently facing
+     */
     public int direction(Ant a)
     {
         return a.direction();
     }
     
+    /**
+     * 
+     * @param a to be checking if they have food to return
+     * @return the value true if ant has food, false is not
+     */
     public boolean hasFood(Ant a)
     {
         return a.hasFood();
     }
     
+    /**
+     * Set the state of the ant so the ant will know what instruction should be
+     * done next
+     * @param s max state is 18 (will do a check, set state to 0 is else)
+     */
     public void setState(int s)
     {
-        a.setState(s);
+        if (s < 0 || s > 18)
+        {
+            a.setState(0);
+        }
+        else
+        {
+            a.setState(s);
+        }
     }
     
+    /**
+     * Set the ant to resting for 14 round before ant does another action
+     * @param r 14
+     */
     public void setResting(int r)
     {
         a.setResting(r);
     }
     
+    /**
+     * Set direction on where ant will be facing
+     * @param d 0-5
+     */
     public void setDirection(int d)
     {
         if (d < 0 || d > 5)
         {
             a.setDirection(0);
-            System.out.println("State was set to 0 as it was not between 0-5");
+            System.out.println("Direction was set to 0 as it was not between 0-5");
         }
         else
         {
@@ -214,6 +282,10 @@ public class AntBrain
         }
     }
     
+    /**
+     * Set if ant has food or not
+     * @param f set true is ant will have food, false if ant dropped food
+     */
     public void setHasFood(boolean f)
     {
         a.setHasFood(f);
