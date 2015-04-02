@@ -1,5 +1,7 @@
 package antgame;
 
+import java.util.ArrayList;
+
 public class Ant{
 	// variables
 	private Position p;	// position
@@ -36,7 +38,7 @@ public class Ant{
 	 * @param  dead			true if this ant is dead, false if otherwise
 	 * @param  s 			state
 	 */
-	public Ant(Position p, int dir, Colour c, int restCount, int dead, int s){
+	public Ant(Position p, int dir, Colour c, int restCount, boolean dead, int s){
 		this.p = p;
 		this.dir = dir;
 		this.c = c;
@@ -104,12 +106,35 @@ public class Ant{
 			return new Position(-1, -1);
 		}
 		
-		if(true)	// cell at the sense position has something
-			return sensePosition;
-		else
+		if(true)	// cell at the sense position has something, condition
+			return sensePosition;	// will be defined as soon as the World
+		else						// class is available.
 			return new Position(-1,-1);
 	}
 
+	/**
+	 * This is Michael's senseCell method.  I am not quite sure
+	 * whether it is correct or not so I just keep it.  
+	 * Calculates if the current cell and three cells in front 
+	 * of the ant has a sense. p is the ants current position, 
+	 * d the directions of the three cells in front.
+	 * (need revision)
+	 *
+	 * @param  p	position
+	 * @param  d 	direction
+	 * @param  sd 	sense direction
+	 * @return the Arraylist of positions (x,y) of the cell if that has a sense, 
+	 * or (-1,-1) if no cell has a sense.
+	 */
+	public ArrayList senseCellList(SenseDirection sd){
+        ArrayList<Position> list  = new ArrayList<>();
+        list.add(p);
+        for(int i=(dir-1);i<(dir+3);i++){
+            list.add(adjacentCell(i));
+        }
+        return list;
+	}
+    
 	/**
 	 * Returns number of ants with colour c which are adjacent 
 	 * (in any direction) to cell at position p.
@@ -140,6 +165,8 @@ public class Ant{
 		for(int i = 0; i < 6; i++){
 			// if there is an enemy ant at (xi, yi), numAnt++
 			// else, do nothing
+			// this required an method to search and return 
+			// an ant object by its position
 		}
 		return numAnts;
 	}
@@ -153,6 +180,77 @@ public class Ant{
 	 */
 	public static boolean checkForSurroundedAnts(Position p){
 		return (adjAnts(p, otherColour(this.c)) >= 5);
+	}
+
+	/**
+	 * Returns the position of a cell next to the cell
+	 * at p in direction d.
+	 * @param  p	position
+	 * @param  d 	direction
+	 * @return the position of an adjacent cell
+	 */
+	public Position adjacentCell(Position p, int d){
+		int x = p.X;
+		int y = p.Y;
+		Position newPos = new Position(-1,-1);
+
+		switch(d){
+			case 0: 
+			newPos.X = x+1;
+            newPos.Y = y;
+			break;
+
+			case 1:	
+			if(y % 2 == 0){ 
+                newPos.X = x;
+                newPos.Y = y+1;
+            }
+            else {
+                newPos.X = x+1;
+                newPos.Y = y+1;
+            }
+			break;
+			
+			case 2:	
+			if(y % 2 == 0) {
+	            newPos.X = x-1;
+	            newPos.Y = y+1;
+	        }
+	        else {
+	            newPos.X = x;
+	            newPos.Y = y+1;
+	        }
+			break;
+			
+			case 3: 
+            newPos.X = x-1;
+            newPos.Y = y;
+			break;
+			
+			case 4:	
+			if(y % 2 == 0){
+                newPos.X = x-1;
+                newPos.Y = y-1;
+            }
+            else{ 
+                newPos.X = x;
+                newPos.Y = y-1;
+            }
+			break;
+			
+			case 5:	
+	        if(y %  2== 0) {
+	            newPos.X = x;
+	            newPos.Y = y-1;
+	        }
+	        else {
+	            newPos.X = x+1;
+	            newPos.Y = y-1;
+	        }
+	        break;
+		}
+
+		return newPos;
 	}
 
 	/**
@@ -234,4 +332,14 @@ public class Ant{
 	public static void setDirection(Ant a, int dir){
 		a.dir = dir;
 	}
+
+	/**
+	 * Sets hasFood of an ant to f.
+	 *
+	 * @param  a 	the target ant
+	 * @param  f 	the new hasFood value
+	 */
+	public static void setHasFood(Ant a, boolean f){
+        	a.hasFood = f;
+    }
 }
