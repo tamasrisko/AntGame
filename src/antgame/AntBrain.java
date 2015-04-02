@@ -112,7 +112,7 @@ public class AntBrain
                 
                 
                 break;
-            case 2: //-CheckSurrAnts -SeAd 3 6 Ally
+            case 2: //-CheckSurrAnts -SeAd 3 6 Enemies
                     // Sense Around current ant for -allies- [Search] is there are allies around me
                 if (a.CheckSurrAnts(a.getPosition) = true)// if there is ally ants - fight?, state: 3
                 {
@@ -132,8 +132,8 @@ public class AntBrain
                 // if more enemy ants - die - turn to food 
                 // else enemy ant dies, state: 0 - checks for food
                 break;
-            case 4: //-Move 5 6
-                    // Move forward and go to state 5 6 if failed
+            case 4: //-Move 5 0
+                    // Move forward and go to state 5 0 if failed
                 if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
                 {
                     a.setState(6); // Six because we know there is a rock/enemy infront
@@ -141,7 +141,7 @@ public class AntBrain
                 else
                 {
                     a.setPosition(new Position(0,0));// if moved was sucsessful, state: 5
-                    a.setState(5);
+                    a.setState(0);
                     // resting has to be here after moving
                 }
                 // else failure, state: 0
@@ -149,7 +149,7 @@ public class AntBrain
                 // Needs to get the ants direction and move it foward
                 break;
             case 5: //-PickUp 11 0
-                    a.setHasFood(true); // Pick up food and jump to state 9, 0 if failed
+                    a.setHasFood(true); // Pick up food and jump to state 11, 0 if failed
                     a.setState(11);
                 break;
             case 6: //-Flip 3 7 8
