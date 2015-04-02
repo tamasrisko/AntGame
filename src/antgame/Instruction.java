@@ -1,3 +1,5 @@
+package antgame;
+
 public abstract class Instruction{}
 
 public class Sense extends Intsruction{

@@ -1,3 +1,5 @@
+package antgame;
+
 public class Position<X, Y> { 
   public int x; 
   public int y; 

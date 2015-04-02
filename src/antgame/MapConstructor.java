@@ -1,3 +1,5 @@
+package antgame;
+
 // i guess it should be integrated with the world class.  
 
 public class MapConstructor {

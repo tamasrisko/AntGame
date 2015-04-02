@@ -37,7 +37,11 @@ public class AntBrainTests {
     public void tearDown() {
     }
 
-    
+    @Test
+    public void test1(){
+        
+        Ant a = new Ant();
+    }
     // @Test
     // public void hello() {}
 }
