@@ -1,3 +1,5 @@
+package antgame;
+
 public class Ant{
 	// variables
 	private Position p;	// position

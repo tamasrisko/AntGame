@@ -40,7 +40,7 @@ public class AntBrainTests {
     @Test
     public void test1(){
         
-        Ant a = new Ant();
+        Ant a = new Ant(new Position(0,0), 1, Colour.RED,1 );
     }
     // @Test
     // public void hello() {}
