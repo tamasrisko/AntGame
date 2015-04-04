@@ -1,6 +1,6 @@
 package antgame;
 
-public abstract class Instruction{}
+public abstract class Instruction{
 
 public class Sense extends Instruction{
 	SenseDirection sensedir;
@@ -31,4 +31,5 @@ public class Move extends Instruction{
 
 public class Flip extends Instruction{
 	int p, st1, st2;
+}
 }

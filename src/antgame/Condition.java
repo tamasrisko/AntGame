@@ -1,3 +1,5 @@
+package antgame;
+
 public enum Condition{
 FRIEND, FOE,
 FRIEND_WITH_FOOD, FOR_WITH_FOOD,
