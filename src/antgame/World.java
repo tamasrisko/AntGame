@@ -24,14 +24,11 @@ import javax.swing.JPanel;
  */
 public class World extends JPanel
 {
-    private final int width = 1200;     // Width of JPanel
-    private final int height = 800;     // HEight of JPanel
+    private final int width = 680;     // Width of JPanel
+    private final int height = 680;     // HEight of JPanel
     
     private Font font = new Font("Arial", Font.BOLD, 10);   // Font to be draw in cell
     FontMetrics metrics;
-    
-    //private int maxX;
-    //private int maxY;
     
     public HexagonCell[][] world = new HexagonCell[width][height];  // 2 by 2 array of world class which holds cells
     
@@ -48,17 +45,18 @@ public class World extends JPanel
     public void paintComponent(Graphics g)
     {
         Graphics2D g2d = (Graphics2D) g;
+        //Point origin = new Point(width / 2, height / 2);
         Point origin = new Point(width / 2, height / 2);
         
         g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
         g2d.setFont(font);
         metrics = g.getFontMetrics();
         
-        drawHexGrid(g2d, origin, 7, 50, 8);
+        drawHexGrid(g2d, origin, 7, 50, 1);
     }
     
     /**
-     * Creats the Hexagon grid onto th JPanel
+     * Creates the Hexagon grid onto th JPanel
      * @param g
      * @param origin point of where the grid will be drawn on the JPanel
      * @param size size of each hexagon
@@ -82,8 +80,23 @@ public class World extends JPanel
                 int yLbl = row - half;
                 int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
                 int y = (int) (origin.y + yOff * (row - half) * 3);
-
-                drawHex(g, xLbl, yLbl, x, y, radius);
+                
+                if ((x & 1) == 0)//(y & 1) == 0 && 
+                {
+                    drawHex(g, xLbl, yLbl, x, y, radius);
+                }
+                else
+                {
+                    //col++;
+                    drawHex(g, xLbl, yLbl, x, y, radius);
+                }
+                
+//                int xLbl = row < half ? col - row : col - half;
+//                int yLbl = row - half;
+//                int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
+//                int y = (int) (origin.y + yOff * (row - half) * 3);
+//
+//                drawHex(g, xLbl, yLbl, x, y, radius);
             }
         }
     }
@@ -97,12 +110,13 @@ public class World extends JPanel
      * @param y
      * @param r 
      */
-    private void drawHex(Graphics g, int posX, int poxY, int x, int y, int r)
+    private void drawHex(Graphics g, int posX, int posY, int x, int y, int r)
     {
         Graphics2D g2d = (Graphics2D) g;
         
         HexagonCell hexCell = new HexagonCell(x, y, r);
         String text = ".";
+        String text1 = String.format("%s : %s", coord(posX), coord(posY));
         int w = metrics.stringWidth(text);
         int h = metrics.getHeight();
         
@@ -117,18 +131,28 @@ public class World extends JPanel
         if (hexCell.isRocky() == true)
         {
             g.setColor(new Color(0xFFFFFF));
-            g.drawString("#", x - w/2, y + h/2);
+            g.drawString(text1, x - w/2, y + h/2);
         }
         else
         {
             g.setColor(new Color(0xFFFFFF));
-            g.drawString(text, x - w/2, y + h/2);
+            g.drawString(text1, x - w/2, y + h/2);
         }
         
         world[x][y] = hexCell;
         System.out.println("World: " + x + " " +  y);
         
         
+    }
+    
+    /**
+     * Gets the coordinates of the Hexagon grid
+     * @param value
+     * @return 
+     */
+    private String coord(int value) 
+    {
+        return (value > 0 ? "+" : "") + Integer.toString(value);
     }
     
     /**
