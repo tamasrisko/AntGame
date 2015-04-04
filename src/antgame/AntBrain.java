@@ -82,7 +82,7 @@ public class AntBrain
                 if (a.senseCell(sd.AHEAD) == "food being true") // if there is food - move to cell, state: 4
                 {
                     //test = a.getClass().getDeclaredMethod("setState", typeInt);
-                    a.setState(4);
+                    a.setState(a,4);
                     //Classes.add(4);
 //                    Inst.add(a.getDirection());
 //                    Instructions.add(a.getClass().getMethod("setState", typeInt));
@@ -90,7 +90,7 @@ public class AntBrain
                 }
                 else // else state: 1
                 {
-                    a.setState(1);
+                    a.setState(a,1);
                 }
                 
                 // or this will how it will be programmed
@@ -99,14 +99,14 @@ public class AntBrain
                 
                 break;
             case 1: //-SeAd 2 6 Enemy
-                 if (a.seseCell(sd.AHEAD) == "enemy")   // Sense Ahead for -enemy- [Search] is there an ememy in front of me
+                 if (a.senseCell(sd.AHEAD) == "enemy")   // Sense Ahead for -enemy- [Search] is there an ememy in front of me
                  {
-                    a.setState(2);// if there is enemy - sense ally ants, state: 2
+                    a.setState(a,2);// if there is enemy - sense ally ants, state: 2
                     // Check the cell infront,
                  }
                  else
                  {
-                     a.setState(6); // else state: 6
+                     a.setState(a,6); // else state: 6
                  }
                 
                 
@@ -117,11 +117,11 @@ public class AntBrain
                 if (a.CheckSurrAnts(a.getPosition) = true)// if there is ally ants - fight?, state: 3
                 {
                     // Not sure if allies or enemy ants
-                    a.setState(3);
+                    a.setState(a,3);
                 }
                 else
                 {
-                    a.setState(6);
+                    a.setState(a,6);
                 }
                 // else state: 6 ---
                 break;
@@ -136,12 +136,12 @@ public class AntBrain
                     // Move forward and go to state 5 0 if failed
                 if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
                 {
-                    a.setState(6); // Six because we know there is a rock/enemy infront
+                    a.setState(a,6); // Six because we know there is a rock/enemy infront
                 }
                 else
                 {
                     a.setPosition(new Position(0,0));// if moved was sucsessful, state: 5
-                    a.setState(0);
+                    a.setState(a,0);
                     // resting has to be here after moving
                 }
                 // else failure, state: 0
@@ -150,7 +150,7 @@ public class AntBrain
                 break;
             case 5: //-PickUp 11 0
                     a.setHasFood(true); // Pick up food and jump to state 11, 0 if failed
-                    a.setState(11);
+                    a.setState(a,11);
                 break;
             case 6: //-Flip 3 7 8
                     // p = 3. St1 = 7, St2 = 8
@@ -158,17 +158,17 @@ public class AntBrain
                 // Random number between 0-3
                 if (a.randomInt == 0)
                 {
-                    a.setState(7);
+                    a.setState(a,7);
                 }
                 else
                 {
-                    a.setState(8);
+                    a.setState(a,8);
                 }// if x = 0, state: 7
                 // else state: 8
                 break;
             case 7: //-Turn Left 0
                 a.turn(lr.LEFT); // Turn left and go to state 0
-                a.setState(0);//left, state: 0
+                a.setState(a,0);//left, state: 0
                 break;
             case 8: //-Flip 2 9 10
                     // p = 2. St1 = 9, St2 = 10
@@ -176,28 +176,28 @@ public class AntBrain
                 // Random number between 0-2
                 if (a.randomInt == 0) // if x = 0, state: 9
                 {
-                    a.setState(9);
+                    a.setState(a,9);
                 }
                 else
                 {
-                    a.setState(10);
+                    a.setState(a,10);
                 }
                 // else state: 10
                 break;
             case 9: //- Turn Right 0
                 a.turn(lr.RIGHT); // Turn right and go to state 0
-                a.setState(0);//right, state: 0
+                a.setState(a,0);//right, state: 0
                 break;
             case 10: //-Move 0 6
                     // Move forward and go to state 0, 3 if failed
                 if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
                 {
-                    a.setState(0); 
+                    a.setState(a,0); 
                 }
                 else
                 {
                     a.setPosition(new Position(0,0));
-                    a.setState(6);
+                    a.setState(a,6);
                     // resting has to be here after moving
                 }// if moved was sucsessful, state: 0
                 // else failure, state: 6
@@ -212,12 +212,12 @@ public class AntBrain
                     // Move forward and go to state 13, 11 if faild
                 if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
                 {
-                    a.setState(13); 
+                    a.setState(a,13); 
                 }
                 else
                 {
                     a.setPosition(new Position(0,0));
-                    a.setState(11);
+                    a.setState(a,11);
                     // resting has to be here after moving
                 }// if moved was sucsessfyl, state: 13
                 // else failure, state 11
@@ -225,7 +225,7 @@ public class AntBrain
             case 13: //-Drop 0
                     if (a.sense(HOME) == true) // Drop food and return to searching
                 a.Drop(); // Drop, State: 0
-                a.setState(0);
+                a.setState(a,0);
                 break;
             case 14: //- Flip 3 15 16
                     // p = 3. St1 = 15, St2 = 16
@@ -233,17 +233,17 @@ public class AntBrain
                 // Random number between 0-3
                 if (a.randomInt == 0)
                 {
-                    a.setState(15);
+                    a.setState(a,15);
                 }
                 else
                 {
-                    a.setState(16);
+                    a.setState(a,16);
                 }// if x = 0, state: 15
                 // else state: 16
                 break;
             case 15: //-Turn Left 10
                 a.turn(lr.LEFT); // Turn left and go to state 9
-                a.setState(11); //left, state: 11
+                a.setState(a,11); //left, state: 11
                 break;
             case 16: //-Flip 2 17 18
                     // p = 2. St1 = 12, St2 = 18
@@ -251,28 +251,28 @@ public class AntBrain
                 // Random number between 0-2
                 if (a.randomInt == 0)
                 {
-                    a.setState(17);
+                    a.setState(a,17);
                 }
                 else
                 {
-                    a.setState(18);
+                    a.setState(a,18);
                 }// if x = 0, state: 17
                 // else state: 18
                 break;
             case 17: //-Turn Right 11
                 a.turn(lr.RIGHT); // Turn right and go to state 11
-                a.setState(11); //right, state: 11
+                a.setState(a,11); //right, state: 11
                 break;
             case 18: //-Move 11 14
                 // Move forward and go to state 11, 14 if faild
                 if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
                 {
-                    a.setState(11); 
+                    a.setState(a,11); 
                 }
                 else
                 {
                     a.setPosition(new Position(0,0));
-                    a.setState(14);
+                    a.setState(a,14);
                     // resting has to be here after moving
                 }// if moved was sucsessfyl, state: 11
                 // else failure, state 14
@@ -286,7 +286,7 @@ public class AntBrain
      */
     public int State(Ant a)
     {
-        return a.state();
+        return a.state(a);
     }
     
     /**
@@ -296,7 +296,7 @@ public class AntBrain
      */
     public Colour Colour(Ant a)
     {
-        return a.colour();
+        return a.colour(a);
     }
     
     /**
@@ -316,7 +316,7 @@ public class AntBrain
      */
     public int direction(Ant a)
     {
-        return a.direction();
+        return a.direction(a);
     }
     
     /**
@@ -326,7 +326,7 @@ public class AntBrain
      */
     public boolean hasFood(Ant a)
     {
-        return a.hasFood();
+        return a.hasFood(a);
     }
     
     /**
@@ -338,11 +338,11 @@ public class AntBrain
     {
         if (s < 0 || s > 18)
         {
-            a.setState(0);
+            a.setState(a,0);
         }
         else
         {
-            a.setState(s);
+            a.setState(a,s);
         }
     }
     
@@ -352,7 +352,7 @@ public class AntBrain
      */
     public void setResting(int r)
     {
-        a.setResting(r);
+        a.setResting(a,r);
     }
     
     /**
@@ -363,12 +363,12 @@ public class AntBrain
     {
         if (d < 0 || d > 5)
         {
-            a.setDirection(0);
+            a.setDirection(a,0);
             System.out.println("Direction was set to 0 as it was not between 0-5");
         }
         else
         {
-            a.setDirection(d);
+            a.setDirection(a,d);
         }
     }
     
@@ -378,6 +378,6 @@ public class AntBrain
      */
     public void setHasFood(boolean f)
     {
-        a.setHasFood(f);
+        a.setHasFood(a,f);
     }
 }

@@ -300,7 +300,7 @@ public class Ant{
 	 * @return true if it has food, false if otherwise.
 	 */
 	public static boolean hasFood(Ant a){
-		return (a.hasFood != 0);
+		return (a.Food != 0);
 	}
 
 	/**
