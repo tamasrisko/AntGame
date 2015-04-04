@@ -7,7 +7,7 @@ public class Ant{
 	private Position p;	// position
 	public int dir;
 	public Colour c;	// colour
-	public int restCount;
+	public static int restCount;
 	public boolean dead;
 	public int s;		// state
 	public boolean hasFood;
@@ -190,62 +190,62 @@ public class Ant{
 	 * @return the position of an adjacent cell
 	 */
 	public Position adjacentCell(Position p, int d){
-		int x = p.X;
-		int y = p.Y;
+		int x = p.x;
+		int y = p.y;
 		Position newPos = new Position(-1,-1);
 
 		switch(d){
 			case 0: 
-			newPos.X = x+1;
-            newPos.Y = y;
+			newPos.x = x+1;
+            newPos.y = y;
 			break;
 
 			case 1:	
 			if(y % 2 == 0){ 
-                newPos.X = x;
-                newPos.Y = y+1;
+                newPos.x = x;
+                newPos.y = y+1;
             }
             else {
-                newPos.X = x+1;
-                newPos.Y = y+1;
+                newPos.x = x+1;
+                newPos.y = y+1;
             }
 			break;
 			
 			case 2:	
 			if(y % 2 == 0) {
-	            newPos.X = x-1;
-	            newPos.Y = y+1;
+	            newPos.x = x-1;
+	            newPos.y = y+1;
 	        }
 	        else {
-	            newPos.X = x;
-	            newPos.Y = y+1;
+	            newPos.x = x;
+	            newPos.y = y+1;
 	        }
 			break;
 			
 			case 3: 
-            newPos.X = x-1;
-            newPos.Y = y;
+            newPos.x = x-1;
+            newPos.y = y;
 			break;
 			
 			case 4:	
 			if(y % 2 == 0){
-                newPos.X = x-1;
-                newPos.Y = y-1;
+                newPos.x = x-1;
+                newPos.y = y-1;
             }
             else{ 
-                newPos.X = x;
-                newPos.Y = y-1;
+                newPos.x = x;
+                newPos.y = y-1;
             }
 			break;
 			
 			case 5:	
 	        if(y %  2== 0) {
-	            newPos.X = x;
-	            newPos.Y = y-1;
+	            newPos.x = x;
+	            newPos.y = y-1;
 	        }
 	        else {
-	            newPos.X = x+1;
-	            newPos.Y = y-1;
+	            newPos.x = x+1;
+	            newPos.y = y-1;
 	        }
 	        break;
 		}
@@ -300,7 +300,7 @@ public class Ant{
 	 * @return true if it has food, false if otherwise.
 	 */
 	public static boolean hasFood(Ant a){
-		return (a.Food != 0);
+		return (a.hasFood != 0);
 	}
 
 	/**
