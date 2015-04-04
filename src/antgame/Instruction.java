@@ -40,4 +40,7 @@ M0, M1, M2, M3, M4, M5,
 FOE_MARKER,
 HOME, FOE_HOME
 }
+public enum LeftOrRight{
+	LEFT, RIGHT
+}
 }
