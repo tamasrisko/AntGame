@@ -347,6 +347,7 @@ public class Ant {
 
         LEFT, RIGHT
     }
+
     public enum Condition {
 
         FRIEND, FOE,
@@ -396,6 +397,5 @@ public class Ant {
 
             int p, st1, st2;
         }
-
     }
 }
