@@ -105,7 +105,7 @@ public class Ant {
                 return new Position(-1, -1);
         }
 
-        if (true) // cell at the sense position has something, condition
+        if (!cellAt(sensePosition).isEmpty()) // ** cellAt is a method to locate a Cell object by its coordinate
         {
             return sensePosition;	// will be defined as soon as the World
         } else // class is available.
@@ -339,63 +339,66 @@ public class Ant {
     }
 
     public enum Colour {
-
         RED, BLACK
     }
 
     public enum LeftOrRight {
-
         LEFT, RIGHT
     }
 
     public enum Condition {
-
         FRIEND, FOE,
         FRIEND_WITH_FOOD, FOR_WITH_FOOD,
         FOOD, ROCK,
-        M0, M1, M2, M3, M4, M5,
+        MARKER,
         FOE_MARKER,
         HOME, FOE_HOME
     }
+    
+    abstract class Instruction {}
 
-    abstract class Instruction {
-
-        public class Sense extends Instruction {
-
-            SenseDirection sensedir;
-            int st1, st2;
-            Condition cond;
+    public class Sense extends Instruction {
+        SenseDirection sensedir;
+        int st1, st2;
+        Condition cond;
+        int markerType;
+        public Sense(SenseDirection sd, int s1, int s2, Condition c, int m) {
+            if(c != Condition.MARKER){    // for all non-MARKER, m = -1
+                m = -1;
+            }
+            sensedir = sd;
+            st1 = s1;
+            st2 = s2;
+            cond = d;
+            markerType = m;
         }
-
-        public class Mark extends Instruction {
-
-            int i, st;
+        public Sense(SenseDirection sd, int s1, int s2, Condition c) {
+            this(sd, s1, s2, c, -1);
         }
+    }
 
-        public class PickUp extends Instruction {
+    public class Mark extends Instruction {
+        int i, st;
+    }
 
-            int st1, st2;
-        }
+    public class PickUp extends Instruction {
+        int st1, st2;
+    }
 
-        public class Drop extends Instruction {
+    public class Drop extends Instruction {
+        int st;
+    }
 
-            int st;
-        }
+    public class Turn extends Instruction {
+        LeftOrRight lr;
+        int st;
+    }
 
-        public class Turn extends Instruction {
+    public class Move extends Instruction {
+        int st1, st2;
+    }
 
-            LeftOrRight lr;
-            int st;
-        }
-
-        public class Move extends Instruction {
-
-            int st1, st2;
-        }
-
-        public class Flip extends Instruction {
-
-            int p, st1, st2;
-        }
+    public class Flip extends Instruction {
+        int p, st1, st2;
     }
 }
