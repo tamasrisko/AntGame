@@ -130,7 +130,7 @@ public class Ant{
         ArrayList<Position> list  = new ArrayList<>();
         list.add(p);
         for(int i=(dir-1);i<(dir+3);i++){
-            list.add(adjacentCell(i));
+            list.add(adjacentCell(p,i));
         }
         return list;
 	}
@@ -342,4 +342,7 @@ public class Ant{
 	public static void setHasFood(Ant a, boolean f){
         	a.hasFood = f;
     }
+        public enum Colour{
+	RED, BLACK
+}
 }
