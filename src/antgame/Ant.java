@@ -84,21 +84,21 @@ public class Ant{
 		Position sensePosition;
 		HexagonLinker hl;
 		switch(sd){
-		case SenseDirection.HERE:
+		case HERE:
 			sensePosition = p;
 			break;
 			
-		case SenseDirection.AHEAD:
+		case AHEAD:
 			hl = new HexagonLinker(p.x, p.y, d);
 			sensePosition = new Position(hl.x, hl.y);
 			break;
 		
-		case SenseDirection.LEFTAHEAD:
+		case LEFTAHEAD:
 			hl = new HexagonLinker(p.x, p.y, turn(LeftOrRight.LEFT, d));
 			sensePosition = new Position(hl.x, hl.y);
 			break;
 			
-		case SenseDirection.RIGHTAHEAD:
+		case RIGHTAHEAD:
 			hl = new HexagonLinker(p.x, p.y, turn(LeftOrRight.RIGHT, d));
 			sensePosition = new Position(hl.x, hl.y);
 			break;
