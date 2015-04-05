@@ -42,18 +42,21 @@ public class AntBrain {
     // ***Varaibles***
     private Ant a;
     private SenseDirection sd;
-
-    ArrayList<Method> Instructions;
-    ArrayList<Ant> Inst;
-    Class<?> typeInt = int.class;
+    Random random;
+    Ant.LeftOrRight lr;
+    Ant.Condition cond;
+    Ant.Colour colour;
+    
+//    ArrayList<Method> Instructions;
+//    ArrayList<Ant> Inst;
+//    Class<?> typeInt = int.class;
 
     Method test;
 
     public AntBrain(Ant _a) {
         this.a = _a;
-        Instructions = new ArrayList<Method>();
-        Inst = new ArrayList<Ant>();
-
+//        Instructions = new ArrayList<Method>();
+//        Inst = new ArrayList<Ant>();
     }
 
     /**
@@ -63,21 +66,16 @@ public class AntBrain {
      * better than the ant colour
      * @param state current state of ant
      */
-    public ArrayList<Method> getInstructions(Ant a, int state) throws NoSuchMethodException // return an instruction
+    public void getInstructions(Colour c, int state) throws NoSuchMethodException // return an instruction
     {
         //a.getClass().getMethod(null, parameterTypes)
         switch (state) {
             case 0: //-SeAd 4 1 Food
                 // Sense Ahead for -food- [Search] is there food in front of me
                 //a.senseCell(sd.AHEAD);// Check the cell infront,
-                if (a.senseCell(sd.AHEAD) == "food being true") // if there is food - move to cell, state: 4
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.FOOD) // if there is food - move to cell, state: 4
                 {
-                    //test = a.getClass().getDeclaredMethod("setState", typeInt);
                     a.setState(a, 4);
-                    //Classes.add(4);
-//                    Inst.add(a.getDirection());
-//                    Instructions.add(a.getClass().getMethod("setState", typeInt));
-//                    Instructions.add(a.getClass().getMethod("setState"));
                 } else // else state: 1
                 {
                     a.setState(a, 1);
@@ -88,7 +86,7 @@ public class AntBrain {
                 //return Sense;
                 break;
             case 1: //-SeAd 2 6 Enemy
-                if (a.senseCell(sd.AHEAD) == "enemy") // Sense Ahead for -enemy- [Search] is there an ememy in front of me
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.FOE) // Sense Ahead for -enemy- [Search] is there an ememy in front of me
                 {
                     a.setState(a, 2);// if there is enemy - sense ally ants, state: 2
                     // Check the cell infront,
@@ -99,7 +97,7 @@ public class AntBrain {
                 break;
             case 2: //-CheckSurrAnts -SeAd 3 6 Enemies
                 // Sense Around current ant for -allies- [Search] is there are allies around me
-                if (a.CheckSurrAnts(a.getPosition) = true)// if there is ally ants - fight?, state: 3
+                if (a.CheckSurrAnts(a.getPosition()) = true)// if there is ally ants - fight?, state: 3
                 {
                     // Not sure if allies or enemy ants
                     a.setState(a, 3);
@@ -109,15 +107,15 @@ public class AntBrain {
                 // else state: 6 ---
                 break;
             case 3: //-More ally or enemy ants? 0
-                a.checkForSurroundedAnts();    // If more enemy ants around surrounding me - die, else move
-                a.setState(0); // if more allies than enemies
+                a.checkForSurroundedAnts(a.getPosition());    // If more enemy ants around surrounding me - die, else move
+                a.setState(a, 0); // if more allies than enemies
                 // 5> enemy ants?
                 // if more enemy ants - die - turn to food 
                 // else enemy ant dies, state: 0 - checks for food
                 break;
             case 4: //-Move 5 0
                 // Move forward and go to state 5 0 if failed
-                if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.ROCK || a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.FOE)// Checks if rock or enmy is ahead which will stop it from moving
                 {
                     a.setState(a, 6); // Six because we know there is a rock/enemy infront
                 } else {
@@ -130,14 +128,14 @@ public class AntBrain {
                 // Needs to get the ants direction and move it foward
                 break;
             case 5: //-PickUp 11 0
-                a.setHasFood(true); // Pick up food and jump to state 11, 0 if failed
+                a.setHasFood(a, true); // Pick up food and jump to state 11, 0 if failed
                 a.setState(a, 11);
                 break;
             case 6: //-Flip 3 7 8
                 // p = 3. St1 = 7, St2 = 8
                 // x is a random number between 0-p
                 // Random number between 0-3
-                if (a.randomInt == 0) {
+                if (randomInt(3) == 0) {
                     a.setState(a, 7);
                 } else {
                     a.setState(a, 8);
@@ -145,14 +143,14 @@ public class AntBrain {
                 // else state: 8
                 break;
             case 7: //-Turn Left 0
-                a.turn(lr.LEFT); // Turn left and go to state 0
+                a.turn(lr.LEFT, a.dir); // Turn left and go to state 0
                 a.setState(a, 0);//left, state: 0
                 break;
             case 8: //-Flip 2 9 10
                 // p = 2. St1 = 9, St2 = 10
                 // x is a random number between 0-p
                 // Random number between 0-2
-                if (a.randomInt == 0) // if x = 0, state: 9
+                if (randomInt(2) == 0) // if x = 0, state: 9
                 {
                     a.setState(a, 9);
                 } else {
@@ -161,17 +159,17 @@ public class AntBrain {
                 // else state: 10
                 break;
             case 9: //- Turn Right 0
-                a.turn(lr.RIGHT); // Turn right and go to state 0
+                a.turn(lr.RIGHT, a.dir); // Turn right and go to state 0
                 a.setState(a, 0);//right, state: 0
                 break;
             case 10: //-Move 0 6
                 // Move forward and go to state 0, 3 if failed
-                if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.ROCK || a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.FOE)// Checks if rock or enmy is ahead which will stop it from moving
                 {
-                    a.setState(a, 0);
+                    a.setState(a, 6);
                 } else {
                     a.setPosition(new Position(0, 0));
-                    a.setState(a, 6);
+                    a.setState(a, 0);
                     // resting has to be here after moving
                 }// if moved was sucsessful, state: 0
                 // else failure, state: 6
@@ -179,25 +177,30 @@ public class AntBrain {
             case 11: //-SeAd 12 14 Home
                 // Sense Ahead for -Home- [Search] is there antHill in front of me
                 // Check the cell infront,
-                // if there is home - move to cell, state: 12
-                // else state: 14
-                break;
-            case 12: //-Move 13 11
-                // Move forward and go to state 13, 11 if faild
-                if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.FOOD)// if there is home - move to cell, state: 12
                 {
-                    a.setState(a, 13);
+                    a.setState(a, 12);
+                } else { // else state: 14
+                    a.setState(a, 14);
+                }
+                break;
+            case 12: //-Move 14 13
+                // Move forward and go to state 13, 11 if faild
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.HOME || a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == "enemy ahead")// Checks if rock or enmy is ahead which will stop it from moving
+                {
+                    a.setState(a, 14);
                 } else {
                     a.setPosition(new Position(0, 0));
-                    a.setState(a, 11);
+                    a.setState(a, 13);
                     // resting has to be here after moving
                 }// if moved was sucsessfyl, state: 13
                 // else failure, state 11
                 break;
             case 13: //-Drop 0
-                if (a.sense(HOME) == true) // Drop food and return to searching
+                if (a.senseCell(a.getPosition, a.dir, sd.HERE) == cond.HOME) // Drop food and return to searching
                 {
                     a.Drop(); // Drop, State: 0
+                    a.setHasFood(a, false);
                 }
                 a.setState(a, 0);
                 break;
@@ -205,22 +208,22 @@ public class AntBrain {
                 // p = 3. St1 = 15, St2 = 16
                 // x is a random number between 0-p
                 // Random number between 0-3
-                if (a.randomInt == 0) {
+                if (randomInt(3) == 0) {
                     a.setState(a, 15);
                 } else {
                     a.setState(a, 16);
                 }// if x = 0, state: 15
                 // else state: 16
                 break;
-            case 15: //-Turn Left 10
-                a.turn(lr.LEFT); // Turn left and go to state 9
+            case 15: //-Turn Left 11
+                a.turn(lr.LEFT, a.dir); // Turn left and go to state 9
                 a.setState(a, 11); //left, state: 11
                 break;
             case 16: //-Flip 2 17 18
                 // p = 2. St1 = 12, St2 = 18
                 // x is a random number between 0-p
                 // Random number between 0-2
-                if (a.randomInt == 0) {
+                if (randomInt(2) == 0) {
                     a.setState(a, 17);
                 } else {
                     a.setState(a, 18);
@@ -228,12 +231,12 @@ public class AntBrain {
                 // else state: 18
                 break;
             case 17: //-Turn Right 11
-                a.turn(lr.RIGHT); // Turn right and go to state 11
+                a.turn(lr.RIGHT, a.dir); // Turn right and go to state 11
                 a.setState(a, 11); //right, state: 11
                 break;
             case 18: //-Move 11 14
                 // Move forward and go to state 11, 14 if faild
-                if (a.senseCell(sd.AHEAD) == rocky || a.senseCell(sd.AHEAD) == enemy)// Checks if rock or enmy is ahead which will stop it from moving
+                if (a.senseCell(a.getPosition(), a.dir, sd.AHEAD) == cond.ROCK || a.senseCell(a.getPosition(), a.dir, sd.HERE) == cond.FOE)// Checks if rock or enmy is ahead which will stop it from moving
                 {
                     a.setState(a, 11);
                 } else {
@@ -334,5 +337,14 @@ public class AntBrain {
      */
     public void setHasFood(boolean f) {
         a.setHasFood(a, f);
+    }
+    
+    public int randomInt(int n)
+    {
+        int h;
+        this.random = new Random(n);
+        
+        h = random.nextInt(n) + 1;
+        return h;
     }
 }
