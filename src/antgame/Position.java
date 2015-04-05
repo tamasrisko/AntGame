@@ -1,5 +1,6 @@
 package antgame;
 
+// already merged into Cell class
 public class Position<X, Y> { 
   public int x; 
   public int y; 
