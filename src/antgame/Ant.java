@@ -338,6 +338,10 @@ public class Ant {
         a.hasFood = f;
     }
 
+    public enum SenseDirection{
+    	HERE, AHEAD, LEFTAHEAD, RIGHTAHEAD
+    }
+    
     public enum Colour {
         RED, BLACK
     }
